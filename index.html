@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: Arial, Helvetica, sans-serif; }
+
+  #stage { position: absolute; top: 0; left: 0; width: 1920px; height: 1080px; transform-origin: top left; background: #fff; }
+
+  .scene { position: absolute; top: 0; left: 0; width: 1920px; height: 1080px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; background: #ffffff; overflow: hidden; transition: opacity 0.9s ease; pointer-events: none; }
+  .scene.active { opacity: 1; }
+
+  .bg-accent { position: absolute; top: -200px; right: -200px; width: 700px; height: 700px;
+    background: linear-gradient(135deg, #ee3124 0%, #c41e13 100%); border-radius: 50%; opacity: 0.06; z-index: 0; }
+  .bg-accent2 { position: absolute; bottom: -260px; left: -180px; width: 550px; height: 550px;
+    background: #1a1a1a; border-radius: 50%; opacity: 0.04; z-index: 0; }
+
+  .logo { position: absolute; top: 50px; left: 65px; height: 78px; z-index: 10; }
+
+  .content { display: flex; align-items: center; gap: 100px; z-index: 2; }
+  .text-block { max-width: 820px; }
+  .eyebrow { color: #ee3124; font-size: 32px; font-weight: bold; letter-spacing: 3px;
+    text-transform: uppercase; margin-bottom: 20px; opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease; }
+  .headline { color: #1a1a1a; font-size: 68px; font-weight: bold; line-height: 1.15; margin-bottom: 28px;
+    opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s; }
+  .subtext { color: #444; font-size: 30px; line-height: 1.5; opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s; }
+  .in .eyebrow, .in .headline, .in .subtext { opacity: 1; transform: translateY(0); }
+
+  .stats { display: flex; flex-direction: column; gap: 26px; opacity: 0; transform: translateX(24px);
+    transition: opacity 0.7s ease 0.45s, transform 0.7s ease 0.45s; width: 420px; }
+  .in .stats { opacity: 1; transform: translateX(0); }
+  .stat { text-align: left; background: #faf7f2; border-left: 6px solid #ee3124; border-radius: 10px;
+    padding: 22px 30px; display: flex; align-items: center; gap: 24px; }
+  .stat .num { color: #ee3124; font-size: 56px; font-weight: bold; line-height: 1; min-width: 140px; }
+  .stat .label { color: #333; font-size: 20px; line-height: 1.3; }
+
+  .badge { display: inline-block; background: #ee3124; color: #fff; font-size: 17px; font-weight: bold;
+    letter-spacing: 1px; text-transform: uppercase; padding: 7px 16px; border-radius: 30px;
+    margin-bottom: 18px; opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .in .badge { opacity: 1; transform: translateY(0); }
+
+  .dlx2-grid { display: flex; gap: 70px; align-items: flex-start; z-index: 2; max-width: 1780px; }
+  .dlx2-left { width: 560px; flex-shrink: 0; }
+  .dlx2-left img { width: 100%; }
+  .dlx2-right { flex: 1; }
+  .dlx2-right .headline { font-size: 52px; margin-bottom: 14px; }
+  .dlx2-right .subtext { font-size: 26px; margin-bottom: 26px; }
+  .spec-cols { display: flex; gap: 46px; opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s; }
+  .in .spec-cols { opacity: 1; transform: translateY(0); }
+  .spec-col { flex: 1; }
+  .spec-col h3 { color: #1a1a1a; font-size: 23px; margin-bottom: 13px; display: flex; align-items: center; gap: 8px; }
+  .spec-col h3 .sw { width: 10px; height: 10px; background: #ee3124; border-radius: 50%; display: inline-block; }
+  .spec-col ul { list-style: none; padding: 0; }
+  .spec-col li { color: #444; font-size: 18.5px; line-height: 1.45; margin-bottom: 11px; padding-left: 18px; position: relative; }
+  .spec-col li:before { content: ''; position: absolute; left: 0; top: 9px; width: 7px; height: 7px; background: #ee3124; border-radius: 50%; }
+
+  .progress-dots { position: absolute; bottom: 230px; left: 50%; transform: translateX(-50%); display: flex; gap: 16px; z-index: 5; }
+  .dot { width: 14px; height: 14px; border-radius: 50%; background: #e0e0e0; }
+  .dot.active { background: #ee3124; }
+
+  .redbar { position: absolute; bottom: 0; left: 0; height: 12px; width: 100%; background: #ee3124; z-index: 5; }
+
+  .countdown { position: absolute; top: 55px; right: 65px; z-index: 20; display: flex; align-items: center; gap: 12px; }
+  .countdown-ring { position: relative; width: 50px; height: 50px; }
+  .countdown-ring svg { transform: rotate(-90deg); }
+  .countdown-ring circle { fill: none; stroke-width: 5; }
+  .countdown-ring .bg { stroke: #eee; }
+  .countdown-ring .fg { stroke: #ee3124; stroke-linecap: round; }
+  .countdown-num { position: absolute; top: 0; left: 0; width: 50px; height: 50px; display: flex;
+    align-items: center; justify-content: center; font-size: 17px; font-weight: bold; color: #1a1a1a; }
+  .countdown-label { color: #888; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ===== Persistent action buttons, always on top, never fade ===== */
+  .action-bar { position: absolute; bottom: 0; left: 0; width: 1920px; height: 200px; z-index: 100;
+    display: flex; align-items: center; justify-content: center; gap: 40px;
+    background: linear-gradient(to top, rgba(0,0,0,0.06), rgba(0,0,0,0)); }
+  .action-btn { display: flex; align-items: center; gap: 22px; background: #ee3124; color: #fff;
+    border: none; border-radius: 100px; padding: 28px 54px; font-size: 32px; font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif; cursor: pointer; box-shadow: 0 14px 34px rgba(238,49,36,0.35);
+    transition: transform 0.15s ease; }
+  .action-btn.secondary { background: #1a1a1a; box-shadow: 0 14px 34px rgba(0,0,0,0.3); }
+  .action-btn:active { transform: scale(0.96); }
+  .action-btn svg { width: 36px; height: 36px; flex-shrink: 0; }
+
+  /* ===== Full-screen form overlay ===== */
+  .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff;
+    z-index: 1000; display: none; flex-direction: column; }
+  .overlay.open { display: flex; }
+  .overlay-bar { height: 110px; flex-shrink: 0; background: #1a1a1a; display: flex; align-items: center;
+    padding: 0 50px; gap: 24px; }
+  .back-btn { display: flex; align-items: center; gap: 16px; background: #ee3124; color: #fff; border: none;
+    border-radius: 100px; padding: 18px 36px; font-size: 24px; font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif; cursor: pointer; }
+  .back-btn svg { width: 26px; height: 26px; }
+  .overlay-title { color: #fff; font-size: 26px; font-weight: bold; margin-left: 10px; }
+  .overlay iframe { flex: 1; width: 100%; border: none; }
+</style>
+</head>
+<body>
+
+<div id="stage">
+
+  <div class="countdown">
+    <div class="countdown-label">Next slide</div>
+    <div class="countdown-ring">
+      <svg width="50" height="50"><circle class="bg" cx="25" cy="25" r="21"></circle>
+        <circle class="fg" id="ring" cx="25" cy="25" r="21" stroke-dasharray="132" stroke-dashoffset="0"></circle></svg>
+      <div class="countdown-num" id="countNum">20</div>
+    </div>
+  </div>
+
+  <!-- LOOPING SCENE 1: About ATI -->
+  <div class="scene" id="scene1">
+    <div class="bg-accent"></div><div class="bg-accent2"></div>
+    <img class="logo" src="ati_logo.png">
+    <div class="content" style="gap: 130px;">
+      <div class="text-block" style="max-width: 820px;">
+        <div class="eyebrow">About ATI</div>
+        <div class="headline" style="font-size: 58px;">From a home garage in 1992 to a global MCD leader</div>
+        <div class="subtext">Accurate Technologies started with the IGTM 1000 ignition timing meter in 1992. Since then we've grown into a 120,000 sq ft World Headquarters in Novi, Michigan, backed by seven offices worldwide. We're a product-based company run with a service organisation mentality, designing, manufacturing and testing exclusively in-house.</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="num">1992</div><div class="label">Founded, with the IGTM 1000</div></div>
+        <div class="stat"><div class="num">7</div><div class="label">Offices worldwide</div></div>
+        <div class="stat"><div class="num">90th</div><div class="label">Percentile customer<br>service rating</div></div>
+      </div>
+    </div>
+    <div class="progress-dots"><div class="dot active"></div><div class="dot"></div></div>
+    <div class="redbar"></div>
+  </div>
+
+  <!-- LOOPING SCENE 2: DLX2 -->
+  <div class="scene" id="scene2">
+    <div class="bg-accent"></div><div class="bg-accent2"></div>
+    <img class="logo" src="ati_logo.png">
+    <div class="dlx2-grid">
+      <div class="dlx2-left">
+        <div class="badge">Coming Soon</div>
+        <img src="dlx2_photo.png">
+      </div>
+      <div class="dlx2-right">
+        <div class="headline">DLX2 Data Logger</div>
+        <div class="subtext">See it running live on our motorbike demo, right here on our stand.</div>
+        <div class="spec-cols">
+          <div class="spec-col">
+            <h3><span class="sw"></span>Versatile Connectivity</h3>
+            <ul>
+              <li>Up to 5 CAN-FD channels (backward compatible with CAN 2.0B)</li>
+              <li>RS485, LIN, ISO 9141 K-Line</li>
+              <li>Wireless: Wi-Fi, Bluetooth v4.2, GNSS (GPS, GLONASS, Galileo, BeiDou)</li>
+              <li>USB 2.0 High Speed (sealed Type-C)</li>
+            </ul>
+          </div>
+          <div class="spec-col">
+            <h3><span class="sw"></span>Expandable &amp; Compatible</h3>
+            <ul>
+              <li>Dual M5 expansion connectors for single-cable connectivity to ATI modules</li>
+              <li>Supports SD card logging (up to 2TB) in ASAM MDF4 format</li>
+              <li>Native support for ATI's VISION Calibration and Data Acquisition Software</li>
+            </ul>
+          </div>
+          <div class="spec-col">
+            <h3><span class="sw"></span>Compact &amp; Accurate</h3>
+            <ul>
+              <li>Housed in a compact, IP65-rated polyamide enclosure</li>
+              <li>16-bit resolution samples</li>
+              <li>Dedicated channels for bipolar differential analog, unipolar single-ended analog, and K-type thermocouples</li>
+              <li>Data output rates up to 2 kHz per channel</li>
+              <li>Durable, pocket-sized, lab-to-field ready</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="progress-dots"><div class="dot"></div><div class="dot active"></div></div>
+    <div class="redbar"></div>
+  </div>
+
+  <!-- PERSISTENT ACTION BUTTONS: always visible, never part of the loop -->
+  <div class="action-bar">
+    <button class="action-btn" onclick="openOverlay('brochure')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+      Get Our Brochure
+    </button>
+    <button class="action-btn secondary" onclick="openBookingPopup()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Book a Meeting
+    </button>
+  </div>
+
+</div>
+
+<!-- FORM OVERLAYS -->
+<div class="overlay" id="overlay-brochure">
+  <div class="overlay-bar">
+    <button class="back-btn" onclick="closeOverlay()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back
+    </button>
+    <div class="overlay-title">Get Our Brochure</div>
+  </div>
+  <iframe id="iframe-brochure" src=""></iframe>
+</div>
+
+
+
+<script>
+  var URLS = {
+    brochure: "https://forms.zohopublic.com/accuratetechnologies/form/CTS26CONTACTFORM/formperma/G4ZyA5kBYmwoHMkJUoGOrzmvhF-2v_Z5ZuBrwH2oFAI",
+    booking: "https://bookings.cloud.microsoft/bookwithme/user/ef021b0697454622b84fccb4b2225439@accuratetechnologies.com/meetingtype/eS6fLXi_wU2Rj4ZX33DxSQ2?anonymous&ismsaljsauthenabled&ep=mlink"
+  };
+
+  var autoReturnTimer = null;
+  function openOverlay(which) {
+    document.getElementById('iframe-' + which).src = URLS[which];
+    document.getElementById('overlay-' + which).classList.add('open');
+    clearTimeout(autoReturnTimer);
+    autoReturnTimer = setTimeout(closeOverlay, 120000); // auto-return after 2 min idle
+  }
+  function openBookingPopup() {
+    var w = Math.min(900, screen.width - 100);
+    var h = Math.min(800, screen.height - 100);
+    var left = (screen.width - w) / 2;
+    var top = (screen.height - h) / 2;
+    window.open(URLS.booking, 'bookingPopup',
+      'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top +
+      ',toolbar=no,location=no,menubar=no,status=no,resizable=yes,scrollbars=yes');
+  }
+  function closeOverlay() {
+    clearTimeout(autoReturnTimer);
+    document.querySelectorAll('.overlay.open').forEach(function(o) {
+      o.classList.remove('open');
+      o.querySelector('iframe').src = "";
+    });
+  }
+
+  function fitStage() {
+    var stage = document.getElementById('stage');
+    var scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    var left = (window.innerWidth - 1920 * scale) / 2;
+    var top = (window.innerHeight - 1080 * scale) / 2;
+    stage.style.transform = 'translate(' + left + 'px,' + top + 'px) scale(' + scale + ')';
+  }
+  window.addEventListener('resize', fitStage);
+  fitStage();
+
+  var scenes = [
+    { id: 'scene1', duration: 20 },
+    { id: 'scene2', duration: 30 }
+  ];
+  var totalCycle = scenes.reduce(function(sum, s) { return sum + s.duration; }, 0);
+  var sceneEls = scenes.map(function(s) { return document.getElementById(s.id); });
+  var currentActive = -1;
+  var start = Date.now();
+  var ring = document.getElementById('ring');
+  var numEl = document.getElementById('countNum');
+  var circumference = 132;
+
+  function tick() {
+    var elapsed = ((Date.now() - start) / 1000) % totalCycle;
+    var acc = 0, idx = 0, sceneElapsed = 0, sceneDuration = scenes[0].duration;
+    for (var i = 0; i < scenes.length; i++) {
+      if (elapsed < acc + scenes[i].duration) {
+        idx = i; sceneElapsed = elapsed - acc; sceneDuration = scenes[i].duration; break;
+      }
+      acc += scenes[i].duration;
+    }
+    if (idx !== currentActive) {
+      sceneEls.forEach(function(el) { el.classList.remove('active', 'in'); });
+      sceneEls[idx].classList.add('active');
+      setTimeout(function() { sceneEls[idx].classList.add('in'); }, 50);
+      currentActive = idx;
+    }
+    var remaining = Math.ceil(sceneDuration - sceneElapsed);
+    numEl.textContent = remaining;
+    ring.setAttribute('stroke-dashoffset', circumference * (sceneElapsed / sceneDuration));
+    requestAnimationFrame(tick);
+  }
+  tick();
+</script>
+
+</body>
+</html>
