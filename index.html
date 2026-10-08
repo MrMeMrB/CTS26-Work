@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: Arial, Helvetica, sans-serif; }
@@ -46,20 +46,20 @@
   .in .badge { opacity: 1; transform: translateY(0); }
 
   .dlx2-grid { display: flex; gap: 70px; align-items: flex-start; z-index: 2; max-width: 1780px; }
-  .dlx2-left { width: 560px; flex-shrink: 0; }
+  .dlx2-left { width: 480px; flex-shrink: 0; }
   .dlx2-left img { width: 100%; }
   .dlx2-right { flex: 1; }
-  .dlx2-right .headline { font-size: 52px; margin-bottom: 14px; }
-  .dlx2-right .subtext { font-size: 26px; margin-bottom: 26px; }
+  .dlx2-right .headline { font-size: 66px; margin-bottom: 18px; }
+  .dlx2-right .subtext { font-size: 32px; margin-bottom: 34px; }
   .spec-cols { display: flex; gap: 46px; opacity: 0; transform: translateY(24px);
     transition: opacity 0.7s ease 0.5s, transform 0.7s ease 0.5s; }
   .in .spec-cols { opacity: 1; transform: translateY(0); }
   .spec-col { flex: 1; }
-  .spec-col h3 { color: #1a1a1a; font-size: 23px; margin-bottom: 13px; display: flex; align-items: center; gap: 8px; }
-  .spec-col h3 .sw { width: 10px; height: 10px; background: #ee3124; border-radius: 50%; display: inline-block; }
+  .spec-col h3 { color: #1a1a1a; font-size: 30px; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+  .spec-col h3 .sw { width: 13px; height: 13px; background: #ee3124; border-radius: 50%; display: inline-block; }
   .spec-col ul { list-style: none; padding: 0; }
-  .spec-col li { color: #444; font-size: 18.5px; line-height: 1.45; margin-bottom: 11px; padding-left: 18px; position: relative; }
-  .spec-col li:before { content: ''; position: absolute; left: 0; top: 9px; width: 7px; height: 7px; background: #ee3124; border-radius: 50%; }
+  .spec-col li { color: #444; font-size: 24px; line-height: 1.5; margin-bottom: 16px; padding-left: 24px; position: relative; }
+  .spec-col li:before { content: ''; position: absolute; left: 0; top: 11px; width: 9px; height: 9px; background: #ee3124; border-radius: 50%; }
 
   .progress-dots { position: absolute; bottom: 230px; left: 50%; transform: translateX(-50%); display: flex; gap: 16px; z-index: 5; }
   .dot { width: 14px; height: 14px; border-radius: 50%; background: #e0e0e0; }
@@ -100,7 +100,7 @@
     font-family: Arial, Helvetica, sans-serif; cursor: pointer; }
   .back-btn svg { width: 26px; height: 26px; }
   .overlay-title { color: #fff; font-size: 26px; font-weight: bold; margin-left: 10px; }
-  .overlay iframe { flex: 1; width: 100%; border: none; }
+  .overlay iframe { flex: 1; width: 100%; border: none; zoom: 1.6; }
 </style>
 </head>
 <body>
@@ -150,30 +150,19 @@
         <div class="subtext">See it running live on our motorbike demo, right here on our stand.</div>
         <div class="spec-cols">
           <div class="spec-col">
-            <h3><span class="sw"></span>Versatile Connectivity</h3>
+            <h3><span class="sw"></span>Connectivity</h3>
             <ul>
-              <li>Up to 5 CAN-FD channels (backward compatible with CAN 2.0B)</li>
-              <li>RS485, LIN, ISO 9141 K-Line</li>
-              <li>Wireless: Wi-Fi, Bluetooth v4.2, GNSS (GPS, GLONASS, Galileo, BeiDou)</li>
-              <li>USB 2.0 High Speed (sealed Type-C)</li>
+              <li>Up to 5 CAN-FD channels</li>
+              <li>RS485, LIN, K-Line, Wi-Fi, Bluetooth, GNSS</li>
+              <li>USB 2.0 High Speed (Type-C)</li>
             </ul>
           </div>
           <div class="spec-col">
-            <h3><span class="sw"></span>Expandable &amp; Compatible</h3>
+            <h3><span class="sw"></span>Performance</h3>
             <ul>
-              <li>Dual M5 expansion connectors for single-cable connectivity to ATI modules</li>
-              <li>Supports SD card logging (up to 2TB) in ASAM MDF4 format</li>
-              <li>Native support for ATI's VISION Calibration and Data Acquisition Software</li>
-            </ul>
-          </div>
-          <div class="spec-col">
-            <h3><span class="sw"></span>Compact &amp; Accurate</h3>
-            <ul>
-              <li>Housed in a compact, IP65-rated polyamide enclosure</li>
-              <li>16-bit resolution samples</li>
-              <li>Dedicated channels for bipolar differential analog, unipolar single-ended analog, and K-type thermocouples</li>
-              <li>Data output rates up to 2 kHz per channel</li>
-              <li>Durable, pocket-sized, lab-to-field ready</li>
+              <li>16-bit resolution, up to 2 kHz per channel</li>
+              <li>SD logging up to 2TB (ASAM MDF4)</li>
+              <li>IP65 enclosure, native VISION support</li>
             </ul>
           </div>
         </div>
@@ -189,7 +178,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
       Get Our Brochure
     </button>
-    <button class="action-btn secondary" onclick="openBookingPopup()">
+    <button class="action-btn secondary" onclick="openBookingOverlay()">
       <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
       Book a Meeting
     </button>
@@ -209,6 +198,26 @@
   <iframe id="iframe-brochure" src=""></iframe>
 </div>
 
+<div class="overlay" id="overlay-booking">
+  <div class="overlay-bar">
+    <button class="back-btn" onclick="closeOverlay()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back
+    </button>
+    <div class="overlay-title">Book a Meeting</div>
+  </div>
+  <div style="flex:1; display:flex; align-items:center; justify-content:center; gap:70px; background:#fff;">
+    <div style="max-width:620px;">
+      <div style="color:#ee3124; font-size:28px; font-weight:bold; letter-spacing:2px; text-transform:uppercase; margin-bottom:18px;">Book a meeting</div>
+      <div style="color:#1a1a1a; font-size:52px; font-weight:bold; line-height:1.2; margin-bottom:24px;">Scan with your phone to find a time that suits you</div>
+      <div style="color:#444; font-size:26px; line-height:1.5;">Point your phone's camera at the QR code and tap the link that appears, no app needed.</div>
+    </div>
+    <div style="width:380px; height:380px; background:#fff; border:3px solid #1a1a1a; border-radius:16px; box-shadow:0 20px 45px rgba(0,0,0,0.18); display:flex; align-items:center; justify-content:center;">
+      <img src="qr_booking.png" style="width:310px; height:310px;">
+    </div>
+  </div>
+</div>
+
 
 
 <script>
@@ -219,37 +228,44 @@
 
   var autoReturnTimer = null;
   function openOverlay(which) {
-    document.getElementById('iframe-' + which).src = URLS[which];
+    var iframe = document.getElementById('iframe-' + which);
+    if (iframe) { iframe.src = URLS[which]; }
     document.getElementById('overlay-' + which).classList.add('open');
     clearTimeout(autoReturnTimer);
     autoReturnTimer = setTimeout(closeOverlay, 120000); // auto-return after 2 min idle
   }
-  function openBookingPopup() {
-    var w = Math.min(900, screen.width - 100);
-    var h = Math.min(800, screen.height - 100);
-    var left = (screen.width - w) / 2;
-    var top = (screen.height - h) / 2;
-    window.open(URLS.booking, 'bookingPopup',
-      'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top +
-      ',toolbar=no,location=no,menubar=no,status=no,resizable=yes,scrollbars=yes');
+  function openBookingOverlay() {
+    openOverlay('booking');
   }
   function closeOverlay() {
     clearTimeout(autoReturnTimer);
     document.querySelectorAll('.overlay.open').forEach(function(o) {
       o.classList.remove('open');
-      o.querySelector('iframe').src = "";
+      var iframe = o.querySelector('iframe');
+      if (iframe) { iframe.src = ""; }
     });
   }
 
   function fitStage() {
     var stage = document.getElementById('stage');
-    var scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
-    var left = (window.innerWidth - 1920 * scale) / 2;
-    var top = (window.innerHeight - 1080 * scale) / 2;
+    var w = window.innerWidth || document.documentElement.clientWidth;
+    var h = window.innerHeight || document.documentElement.clientHeight;
+    if (!w || !h) return;
+    var scale = Math.min(w / 1920, h / 1080);
+    var left = (w - 1920 * scale) / 2;
+    var top = (h - 1080 * scale) / 2;
     stage.style.transform = 'translate(' + left + 'px,' + top + 'px) scale(' + scale + ')';
   }
   window.addEventListener('resize', fitStage);
+  window.addEventListener('orientationchange', fitStage);
+  document.addEventListener('DOMContentLoaded', fitStage);
+  window.addEventListener('load', fitStage);
+  if (window.visualViewport) { window.visualViewport.addEventListener('resize', fitStage); }
+  // Kiosk webviews can report the wrong size for a moment while settling into fullscreen,
+  // so keep re-checking for the first few seconds rather than trusting the first read.
   fitStage();
+  [100, 300, 600, 1000, 2000, 4000].forEach(function(ms) { setTimeout(fitStage, ms); });
+  setInterval(fitStage, 5000);
 
   var scenes = [
     { id: 'scene1', duration: 20 },
@@ -284,6 +300,30 @@
     requestAnimationFrame(tick);
   }
   tick();
+
+  // Swipe left/right to jump between scenes manually, disabled while a form overlay is open
+  var sceneOffsets = [];
+  (function() {
+    var acc = 0;
+    scenes.forEach(function(s) { sceneOffsets.push(acc); acc += s.duration; });
+  })();
+  function goToScene(idx) {
+    idx = (idx + scenes.length) % scenes.length;
+    start = Date.now() - sceneOffsets[idx] * 1000;
+  }
+  var touchStartX = null;
+  document.addEventListener('touchstart', function(e) {
+    if (document.querySelector('.overlay.open')) { touchStartX = null; return; }
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    if (touchStartX === null) return;
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 60) {
+      goToScene(dx < 0 ? currentActive + 1 : currentActive - 1);
+    }
+    touchStartX = null;
+  }, { passive: true });
 </script>
 
 </body>
