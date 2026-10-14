@@ -93,6 +93,26 @@
     align-items: center; justify-content: center; font-size: 17px; font-weight: bold; color: #1a1a1a; }
   .countdown-label { color: #888; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
 
+
+  /* ===== Brochure slides ===== */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease 0.45s, transform 0.7s ease 0.45s; }
+  .in .reveal { opacity: 1; transform: translateY(0); }
+  .photo { width: 700px; height: 560px; border-radius: 18px; overflow: hidden; background: #fff;
+    border: 3px solid #1a1a1a; box-shadow: 0 20px 45px rgba(0,0,0,0.18); flex-shrink: 0; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo.contain img { object-fit: contain; }
+  .chips { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 34px; }
+  .chip { flex: 1 1 240px; background: #faf7f2; border-left: 6px solid #ee3124; border-radius: 10px; padding: 16px 22px; }
+  .chips.four .chip { flex-basis: 170px; }
+  .chip .num { color: #ee3124; font-size: 40px; font-weight: bold; line-height: 1.1; }
+  .chip .label { color: #333; font-size: 19px; line-height: 1.3; margin-top: 4px; }
+  .cards { display: flex; gap: 28px; margin-top: 40px; }
+  .card { width: 500px; background: #faf7f2; border-left: 6px solid #ee3124; border-radius: 10px;
+    padding: 20px 24px 24px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .cards.two .card { width: 640px; }
+  .card img { mix-blend-mode: multiply; height: 160px; max-width: 100%; object-fit: contain; margin-bottom: 14px; }
+  .card .num { color: #ee3124; font-size: 46px; font-weight: bold; line-height: 1.1; }
+  .card .label { color: #333; font-size: 20px; line-height: 1.3; margin-top: 6px; }
   /* ===== Persistent action buttons, always on top, never fade ===== */
   .action-bar { position: absolute; bottom: 0; left: 0; width: 1920px; height: 200px; z-index: 100;
     display: flex; align-items: center; justify-content: center; gap: 40px;
@@ -152,7 +172,7 @@
         <div class="qr-card"><img src="qr_brochure.png"></div>
       </div>
     </div>
-    <div class="progress-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    <div class="progress-dots"></div>
     <div class="redbar"></div>
   </div>
 
@@ -179,7 +199,7 @@
         </div>
       </div>
     </div>
-    <div class="progress-dots"><div class="dot"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+    <div class="progress-dots"></div>
     <div class="redbar"></div>
   </div>
 
@@ -199,10 +219,108 @@
         <div class="stat"><div class="num">90th</div><div class="label">Percentile customer<br>service rating</div></div>
       </div>
     </div>
-    <div class="progress-dots"><div class="dot"></div><div class="dot"></div><div class="dot active"></div><div class="dot"></div></div>
+    <div class="progress-dots"></div>
     <div class="redbar"></div>
   </div>
 
+  <!-- LOOPING SCENE: scenePortfolio -->
+  <div class="scene" id="scenePortfolio">
+    <div class="bg-accent"></div><div class="bg-accent2"></div>
+    <img class="logo" src="ati_logo.png">
+    <div class="content" style="gap: 90px; margin-top: -40px;">
+      <div class="text-block" style="max-width: 840px;">
+        <div class="eyebrow">Our Portfolio</div>
+        <div class="headline" style="font-size: 56px;">An integrated MCD toolchain</div>
+        <div class="subtext">Measurement, calibration and diagnostics hardware, software and third-party products, designed to work together across ICE, hybrid, EV and embedded systems.</div>
+        <div class="chips four reveal">
+          <div class="chip"><div class="num">01</div><div class="label">ECU interfaces</div></div>
+          <div class="chip"><div class="num">02</div><div class="label">DAQ and I/O hardware</div></div>
+          <div class="chip"><div class="num">03</div><div class="label">Software</div></div>
+          <div class="chip"><div class="num">04</div><div class="label">Test cell products</div></div>
+        </div>
+      </div>
+      <div class="photo contain reveal"><img src="img_chassis.jpg"></div>
+    </div>
+    <div class="progress-dots"></div>
+    <div class="redbar"></div>
+  </div>
+  <!-- LOOPING SCENE: sceneVision -->
+  <div class="scene" id="sceneVision">
+    <div class="bg-accent"></div><div class="bg-accent2"></div>
+    <img class="logo" src="ati_logo.png">
+    <div class="content" style="gap: 90px; margin-top: -40px;">
+      <div class="text-block" style="max-width: 840px;">
+        <div class="eyebrow">VISION Software Suite</div>
+        <div class="headline" style="font-size: 56px;">Calibration and data acquisition on one platform</div>
+        <div class="subtext">VISION time-aligns your data, manages calibration changes and flashes the ECU. Add analysis, rapid prototyping with No-Hooks, and CANLab network analysis as you need them.</div>
+        <div class="chips reveal">
+          <div class="chip"><div class="num">64-bit</div><div class="label">Large data sets</div></div>
+          <div class="chip"><div class="num">MDF4</div><div class="label">ASAM MDF 4.1 format</div></div>
+          <div class="chip"><div class="num">CAN FD</div><div class="label">CANLab log, send, replay</div></div>
+        </div>
+      </div>
+      <div class="photo  reveal"><img src="img_vision.jpg"></div>
+    </div>
+    <div class="progress-dots"></div>
+    <div class="redbar"></div>
+  </div>
+  <!-- LOOPING SCENE: sceneDaq -->
+  <div class="scene" id="sceneDaq">
+    <div class="bg-accent"></div><div class="bg-accent2"></div>
+    <img class="logo" src="ati_logo.png">
+    <div class="content" style="flex-direction: column; align-items: flex-start; gap: 0; margin-top: -60px;">
+      <div class="text-block" style="max-width: 1500px;">
+        <div class="eyebrow">Data Acquisition</div>
+        <div class="headline" style="font-size: 52px; margin-bottom: 20px;">Rugged data acquisition, in the test cell and on the road</div>
+        <div class="subtext">From the modular EMX 2.0 chassis to the compact DLX datalogger.</div>
+      </div>
+      <div class="cards two reveal">
+        <div class="card"><img src="img_emx.png"><div class="num">IP67</div><div class="label">EMX 2.0 modular DAQ with aerospace-grade connectors</div></div>
+        <div class="card"><img src="img_dlx.png"><div class="num">IP65</div><div class="label">DLX compact datalogger, logs to ASAM MDF4</div></div>
+      </div>
+    </div>
+    <div class="progress-dots"></div>
+    <div class="redbar"></div>
+  </div>
+  <!-- LOOPING SCENE: sceneIface -->
+  <div class="scene" id="sceneIface">
+    <div class="bg-accent"></div><div class="bg-accent2"></div>
+    <img class="logo" src="ati_logo.png">
+    <div class="content" style="flex-direction: column; align-items: flex-start; gap: 0; margin-top: -60px;">
+      <div class="text-block" style="max-width: 1500px;">
+        <div class="eyebrow">Interfaces and Gateways</div>
+        <div class="headline" style="font-size: 52px; margin-bottom: 20px;">Connect to any ECU or vehicle network</div>
+        <div class="subtext">High-speed serial ECU interfaces, CAN FD interfaces and a gateway that bridges CAN, LIN and Automotive Ethernet.</div>
+      </div>
+      <div class="cards reveal">
+        <div class="card"><img src="img_a9.png"><div class="num">1Gbps</div><div class="label">A9 ECU interface with IEEE-1588 PTP time sync</div></div>
+        <div class="card"><img src="img_canary.png"><div class="num">4 channels</div><div class="label">CANary FD, galvanically isolated CAN FD</div></div>
+        <div class="card"><img src="img_vcg.png"><div class="num">6 CAN-FD</div><div class="label">VCG-1 gateway, plus 2 LIN and Automotive Ethernet</div></div>
+      </div>
+    </div>
+    <div class="progress-dots"></div>
+    <div class="redbar"></div>
+  </div>
+  <!-- LOOPING SCENE: sceneSupport -->
+  <div class="scene" id="sceneSupport">
+    <div class="bg-accent"></div><div class="bg-accent2"></div>
+    <img class="logo" src="ati_logo.png">
+    <div class="content" style="gap: 90px; margin-top: -40px;">
+      <div class="text-block" style="max-width: 840px;">
+        <div class="eyebrow">Support and Training</div>
+        <div class="headline" style="font-size: 56px;">Hands-on support, wherever your project is</div>
+        <div class="subtext">Free ongoing product training and software updates (with current software maintenance and support), plus on-site support worldwide for major OEM and Tier One partners.</div>
+        <div class="chips reveal">
+          <div class="chip"><div class="num">1 hr</div><div class="label">Typical support email response</div></div>
+          <div class="chip"><div class="num">2 wk</div><div class="label">Average repair</div></div>
+          <div class="chip"><div class="num">8</div><div class="label">Locations: Novi HQ plus seven offices</div></div>
+        </div>
+      </div>
+      <div class="photo  reveal"><img src="img_support.jpg"></div>
+    </div>
+    <div class="progress-dots"></div>
+    <div class="redbar"></div>
+  </div>
   <!-- LOOPING SCENE 2: DLX2 -->
   <div class="scene" id="scene2">
     <div class="bg-accent"></div><div class="bg-accent2"></div>
@@ -235,7 +353,7 @@
         </div>
       </div>
     </div>
-    <div class="progress-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot active"></div></div>
+    <div class="progress-dots"></div>
     <div class="redbar"></div>
   </div>
 
@@ -326,11 +444,21 @@
     { id: 'scene0', duration: 11 },
     { id: 'sceneBooking', duration: 11 },
     { id: 'scene1', duration: 20 },
+    { id: 'scenePortfolio', duration: 16 },
+    { id: 'sceneVision', duration: 18 },
+    { id: 'sceneDaq', duration: 18 },
+    { id: 'sceneIface', duration: 18 },
+    { id: 'sceneSupport', duration: 16 },
     { id: 'scene2', duration: 30 }
   ];
   var totalCycle = scenes.reduce(function(sum, s) { return sum + s.duration; }, 0);
   var sceneEls = scenes.map(function(s) { return document.getElementById(s.id); });
   var currentActive = -1;
+  sceneEls.forEach(function(el) {
+    var box = el.querySelector('.progress-dots');
+    if (!box) return;
+    scenes.forEach(function(s, i) { var d = document.createElement('div'); d.className = 'dot'; box.appendChild(d); });
+  });
   var start = Date.now();
   var ring = document.getElementById('ring');
   var numEl = document.getElementById('countNum');
@@ -348,6 +476,8 @@
     if (idx !== currentActive) {
       sceneEls.forEach(function(el) { el.classList.remove('active', 'in'); });
       sceneEls[idx].classList.add('active');
+      var dots = sceneEls[idx].querySelectorAll('.dot');
+      for (var k = 0; k < dots.length; k++) { dots[k].classList.toggle('active', k === idx); }
       setTimeout(function() { sceneEls[idx].classList.add('in'); }, 50);
       currentActive = idx;
     }
