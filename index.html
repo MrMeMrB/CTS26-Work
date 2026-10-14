@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 100%; height: 100%; overflow: hidden; background: #000; font-family: Arial, Helvetica, sans-serif; }
@@ -136,7 +136,12 @@
     font-family: Arial, Helvetica, sans-serif; cursor: pointer; }
   .back-btn svg { width: 26px; height: 26px; }
   .overlay-title { color: #fff; font-size: 26px; font-weight: bold; margin-left: 10px; }
-  .overlay iframe { flex: 1; width: 100%; border: none; zoom: 1.6; }
+  .overlay iframe { flex: 1; width: 100%; border: none; zoom: 1.25; min-height: 0; }
+  /* Keyboard up (short visible area): slim the header so the form gets the space */
+  .overlay.kb .overlay-bar { height: 56px; padding: 0 20px; }
+  .overlay.kb .back-btn { padding: 8px 22px; font-size: 18px; }
+  .overlay.kb .back-btn svg { width: 18px; height: 18px; }
+  .overlay.kb .overlay-title { font-size: 18px; }
 </style>
 </head>
 <body>
@@ -397,6 +402,7 @@
     var iframe = document.getElementById('iframe-' + which);
     if (iframe) { iframe.src = URLS[which]; }
     document.getElementById('overlay-' + which).classList.add('open');
+    fitOverlay();
     clearTimeout(autoReturnTimer);
     autoReturnTimer = setTimeout(closeOverlay, 120000); // auto-return after 2 min idle
   }
@@ -410,6 +416,24 @@
       ',toolbar=no,location=no,menubar=no,status=no,resizable=yes,scrollbars=yes');
     if (!win) { window.open(URLS.booking, '_blank'); }
   }
+
+  // Keep the form overlay inside the visible area (above the on-screen keyboard)
+  function fitOverlay() {
+    var vv = window.visualViewport;
+    var vh = vv ? vv.height : window.innerHeight;
+    var top = vv ? vv.offsetTop : 0;
+    document.querySelectorAll('.overlay').forEach(function(o) {
+      o.style.top = top + 'px';
+      o.style.height = vh + 'px';
+      o.classList.toggle('kb', vh < 560);
+    });
+  }
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', fitOverlay);
+    window.visualViewport.addEventListener('scroll', fitOverlay);
+  }
+  window.addEventListener('resize', fitOverlay);
+  fitOverlay();
   function closeOverlay() {
     clearTimeout(autoReturnTimer);
     document.querySelectorAll('.overlay.open').forEach(function(o) {
